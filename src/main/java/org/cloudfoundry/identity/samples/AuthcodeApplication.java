@@ -44,7 +44,7 @@ public class AuthcodeApplication extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
             .antMatcher("/oidc").authorizeRequests()
-            .antMatchers("/oidc").access("@scopeChecker.hasAnyScope(authentication, 'test')")
+            .antMatchers("/oidc").access("@scopeChecker.hasAnyScope(authentication, 'openid')")
             .and()
             .antMatcher("/**").authorizeRequests()
             .antMatchers("/", "/index", "/error").permitAll()
