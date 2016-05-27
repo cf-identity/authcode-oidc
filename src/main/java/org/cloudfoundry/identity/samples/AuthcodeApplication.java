@@ -24,6 +24,11 @@ public class AuthcodeApplication extends WebSecurityConfigurerAdapter {
         SpringApplication.run(AuthcodeApplication.class, args);
     }
 
+    @Bean
+    public CheckScope scopeChecker() {
+        return new CheckScope();
+    }
+
     @RequestMapping("/")
     public String index() {
         return "index";
@@ -33,12 +38,6 @@ public class AuthcodeApplication extends WebSecurityConfigurerAdapter {
     public String oidc(Authentication authentication) {
         return "oidc";
     }
-
-    @Bean
-    public CheckScope scopeChecker() {
-        return new CheckScope();
-    }
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
