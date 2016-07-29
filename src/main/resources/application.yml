@@ -9,8 +9,6 @@ security:
       clientSecret: secret
       accessTokenUri: http://localhost:8080/uaa/oauth/token
       userAuthorizationUri: http://localhost:8080/uaa/oauth/authorize
-      #pre-established-redirect-uri: http://localhost:{server.port}/oidc
-
 spring:
   thymeleaf:
     cache: false
