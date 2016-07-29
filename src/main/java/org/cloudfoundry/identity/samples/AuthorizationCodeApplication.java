@@ -63,7 +63,6 @@ public class AuthorizationCodeApplication extends WebSecurityConfigurerAdapter {
             return OAuth2ExpressionUtils.hasAnyScope(authentication, scope);
         }
     }
-
     public static void main(String[] args) {
         SpringApplication.run(AuthorizationCodeApplication.class, args);
     }
