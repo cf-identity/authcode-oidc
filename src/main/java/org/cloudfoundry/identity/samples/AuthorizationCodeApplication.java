@@ -18,8 +18,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import static org.cloudfoundry.identity.samples.Utils.getUsername;
-import static org.cloudfoundry.identity.samples.Utils.prettyPrint;
+import static org.cloudfoundry.identity.samples.utils.Utils.getUsername;
+import static org.cloudfoundry.identity.samples.utils.Utils.prettyPrint;
 
 @SpringBootApplication
 @EnableAutoConfiguration

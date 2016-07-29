@@ -1,4 +1,4 @@
-package org.cloudfoundry.identity.samples;
+package org.cloudfoundry.identity.samples.utils;
 
 
 import java.io.IOException;
@@ -17,16 +17,16 @@ public class Utils {
 
     static ObjectMapper m =  new ObjectMapper();
 
-    static String getUsername(OAuth2Authentication authentication) throws IOException {
+    public static String getUsername(OAuth2Authentication authentication) throws IOException {
         return (String) getClaims(getJwt(authentication)).get("user_name");
     }
 
-    static String prettyPrint(OAuth2Authentication authentication) throws IOException {
+    public static String prettyPrint(OAuth2Authentication authentication) throws IOException {
         Jwt jwt = getJwt(authentication);
         return prettyPrint(jwt);
     }
 
-    static String prettyPrint(Jwt jwt) throws IOException {
+    public static String prettyPrint(Jwt jwt) throws IOException {
         Map<String,Object> map = getClaims(jwt);
         String result = new GsonBuilder()
             .setPrettyPrinting()
@@ -40,12 +40,12 @@ public class Utils {
             .replace(" ", "&nbsp;");
     }
 
-    static Jwt getJwt(OAuth2Authentication authentication) {
+    public static Jwt getJwt(OAuth2Authentication authentication) {
         String jwtValue = ((OAuth2AuthenticationDetails)authentication.getDetails()).getTokenValue();
         return JwtHelper.decode(jwtValue);
     }
 
-    static Map<String, Object> getClaims(Jwt jwt) throws IOException {
+    public static Map<String, Object> getClaims(Jwt jwt) throws IOException {
         return m.readValue(jwt.getClaims(), new TypeReference<Map<String,Object>>() {});
     }
 }
