@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import static org.cloudfoundry.identity.samples.utils.Utils.getUsername;
 import static org.cloudfoundry.identity.samples.utils.Utils.prettyPrint;
 
+
 @SpringBootApplication
 @EnableAutoConfiguration
 @ComponentScan
