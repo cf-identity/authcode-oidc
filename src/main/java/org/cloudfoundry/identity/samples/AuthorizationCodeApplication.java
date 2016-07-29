@@ -20,22 +20,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import static org.cloudfoundry.identity.samples.utils.Utils.getUsername;
 import static org.cloudfoundry.identity.samples.utils.Utils.prettyPrint;
-
-
 @SpringBootApplication
 @EnableAutoConfiguration
 @ComponentScan
 @Controller
 @EnableOAuth2Sso
-public class AuthorizationCodeApplication  extends WebSecurityConfigurerAdapter {
+public class AuthorizationCodeApplication extends WebSecurityConfigurerAdapter {
 
     @RequestMapping("/")
-    public String index() {
+    public String nonsecure() {
         return "index";
     }
 
     @RequestMapping("/oidc")
-    public String oidc(OAuth2Authentication authentication, Model model) throws IOException {
+    public String secure(OAuth2Authentication authentication, Model model) throws IOException {
         model.addAttribute("jwt", prettyPrint(authentication));
         model.addAttribute("username", getUsername(authentication));
         return "oidc";
@@ -43,15 +41,15 @@ public class AuthorizationCodeApplication  extends WebSecurityConfigurerAdapter 
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-            .antMatcher("/oidc").authorizeRequests()
+        http.antMatcher("/oidc").authorizeRequests()
             .antMatchers("/oidc").access("@checkScope.hasAnyScope(authentication, 'openid')")
             .and()
             .antMatcher("/**").authorizeRequests()
-            .antMatchers("/", "/index", "/error").permitAll()
+            .antMatchers("/", "/error").permitAll()
             .anyRequest().authenticated()
             .and()
-            .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/");
+            .logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+            .logoutSuccessUrl("/");
     }
 
     @Bean
@@ -59,13 +57,13 @@ public class AuthorizationCodeApplication  extends WebSecurityConfigurerAdapter 
         return new CheckScope();
     }
 
+    public static void main(String[] args) {
+        SpringApplication.run(AuthorizationCodeApplication.class, args);
+    }
+
     public static class CheckScope {
         public boolean hasAnyScope(Authentication authentication, String... scope) {
             return OAuth2ExpressionUtils.hasAnyScope(authentication, scope);
         }
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(AuthorizationCodeApplication.class, args);
     }
 }
