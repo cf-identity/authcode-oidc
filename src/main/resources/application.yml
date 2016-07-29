@@ -1,0 +1,14 @@
+server:
+  port: 8888
+spring:
+  thymeleaf:
+    cache: false
+security:
+  oauth2:
+    client:
+      clientId: oauth_showcase_authorization_code
+      clientSecret: secret
+      accessTokenUri: http://localhost:8080/uaa/oauth/token
+      userAuthorizationUri: http://localhost:8080/uaa/oauth/authorize
+    resource:
+      tokenInfoUri: http://localhost:8080/uaa/check_token
