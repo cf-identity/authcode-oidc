@@ -3,12 +3,24 @@ server:
 spring:
   thymeleaf:
     cache: false
+
+clientdefaults:
+  client: &clientdefaults
+    client-secret: secret
+    access-token-uri: http://localhost:8080/uaa/oauth/token
+
+  resource: &resourcedefaults
+    token-info-uri: http://localhost:8080/uaa/check_token
+
 security:
   oauth2:
     client:
+      <<: *clientdefaults
       client-id: oauth_showcase_authorization_code
-      client-secret: secret
-      access-token-uri: http://localhost:8080/uaa/oauth/token
-      user-authorization-uri: http://localhost:8080/uaa/oauth/authorize
+#      pre-established-redirect-uri: http://localhost:8888/login
     resource:
-      token-info-uri: http://localhost:8080/uaa/check_token
+      <<: *resourcedefaults
+simple:
+  client:
+    <<: *clientdefaults
+    client-id: oauth_showcase_client_credentials
