@@ -28,6 +28,9 @@ public class Utils {
 
     public static String prettyPrint(Jwt jwt) throws IOException {
         Map<String,Object> map = getClaims(jwt);
+        return prettyPrint(map);
+    }
+    public static String prettyPrint(Map map) throws IOException {
         String result = new GsonBuilder()
             .setPrettyPrinting()
             .disableHtmlEscaping()
@@ -41,11 +44,27 @@ public class Utils {
     }
 
     public static Jwt getJwt(OAuth2Authentication authentication) {
-        String jwtValue = ((OAuth2AuthenticationDetails)authentication.getDetails()).getTokenValue();
+        String jwtValue = getTokenValue(authentication);
         return JwtHelper.decode(jwtValue);
+    }
+
+    public static String getTokenValue(OAuth2Authentication authentication) {
+        return ((OAuth2AuthenticationDetails)authentication.getDetails()).getTokenValue();
     }
 
     public static Map<String, Object> getClaims(Jwt jwt) throws IOException {
         return m.readValue(jwt.getClaims(), new TypeReference<Map<String,Object>>() {});
+    }
+
+    public static String multiline(String s, int cols) {
+        StringBuffer result = new StringBuffer();
+        int count = 0;
+        for (char c : s.toCharArray()) {
+            if (++count % cols == 0) {
+                result.append('\n');
+            }
+            result.append(c);
+        }
+        return result.toString();
     }
 }

@@ -7,12 +7,9 @@
 <body>
 <h1 th:text="'Welcome ' + ${username} + ','">Welcome</h1>
 Token Information:<br />
-  <code th:utext="${jwt}">The JSON Web Token</code>
+  <code th:utext="${userinfo}">User Info</code>
 <hr/>
-<a href="/my-info">Get My User Data</a><br/>
+<a href="/oidc">Access Token</a><br/>
 <a href="/logout">Log Out</a>
-<hr/>
-Access Token:
-<pre th:text="${token}">access token value</pre>
 </body>
 </html>
